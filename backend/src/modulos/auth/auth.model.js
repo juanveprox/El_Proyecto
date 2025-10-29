@@ -2,7 +2,7 @@ const { pool, probarConexion } = require('../../config/baseDatos');
 const bcrypt = require('bcrypt');
 
 class AuthModel {
-    // Crear nuevo usuario
+    // Crear nuevo usuario-
     async crearUsuario(datos) {
         const hashedPassword = await bcrypt.hash(datos.password, 10);
 
@@ -11,21 +11,20 @@ class AuthModel {
        VALUES (?, ?, ?, ?, ?)`,
             [datos.nombre, datos.usuario, datos.correo, hashedPassword, datos.rol]
         );
-
         return this.obtenerUsuarioPorId(result.insertId);
     }
 
-    // Obtener usuario por ID
+    // Obtener usuario por ID-
     async obtenerUsuarioPorId(id) {
         const [rows] = await pool.execute(
-            `SELECT id, usuario, correo, rol,
+            `SELECT id, usuario, correo, rol
        FROM usuarios WHERE id = ?`,
             [id]
         );
         return rows[0] || null;
     }
 
-    // Obtener usuario por email o username
+    // Obtener usuario por email o username-
     async obtenerUsuarioPorCredenciales(identificador) {
         probarConexion
         const [rows] = await pool.execute(
@@ -37,7 +36,7 @@ class AuthModel {
         return rows[0] || null;
     }
 
-    // Verificar si username existe
+    // Verificar si username existe -
     async usernameExiste(username, excludeId = null) {
         let query = 'SELECT COUNT(*) as count FROM usuarios WHERE usuario = ?';
         const params = [username];
@@ -51,7 +50,7 @@ class AuthModel {
         return rows[0].count > 0;
     }
 
-    // Verificar si email existe
+    // Verificar si email existe-
     async emailExiste(correo, excludeId = null) {
         let query = 'SELECT COUNT(*) as count FROM usuarios WHERE correo = ?';
         const params = [correo];
@@ -65,7 +64,7 @@ class AuthModel {
         return rows[0].count > 0;
     }
 
-    // Actualizar último login
+    // Actualizar último login-
     async actualizarUltimoLogin(id) {
         await pool.execute(
             'UPDATE usuarios SET ultimo_login = CURRENT_TIMESTAMP WHERE id = ?',
@@ -83,7 +82,7 @@ class AuthModel {
         return rows;
     }
 
-    // Cambiar estado de usuario
+    // Cambiar estado de usuario - 
     async cambiarEstadoUsuario(id, activo) {
         const [result] = await pool.execute(
             'UPDATE usuarios SET activo = ? WHERE id = ?',

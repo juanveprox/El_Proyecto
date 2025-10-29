@@ -6,31 +6,30 @@ const { jwtSecret, jwtExpiresIn } = require('../../config/jwt');
 
 class AuthServicio {
 
-    // Registrar nuevo usuario
+    // Registrar nuevo usuario-
     async registrarUsuario(datos) {
 
-        // Validar que no exista el username
         if (await authModel.usernameExiste(datos.usuario)) {
             throw new Error('El nombre de usuario ya existe');
         }
 
-        // Validar que no exista el email
-        if (await authModel.emailExiste(datos.email)) {
+        // Validar que no exista el email-
+        if (await authModel.emailExiste(datos.correo)) {
             throw new Error('El email ya está registrado');
         }
 
-        // Validaciones adicionales
+        // Validaciones adicionales-
         this.validarDatosRegistro(datos);
 
         // Crear usuario
         return await authModel.crearUsuario(datos);
     }
 
-    // Login de usuario
+    // Login de usuario-
     async login(datos) {
         const { usuario, password } = datos;
 
-        // Buscar usuario
+        // Buscar usuario-
         const username = await authModel.obtenerUsuarioPorCredenciales(usuario);
         if (!username) {
             throw new Error('Usuario o Correo invalidos');
@@ -42,7 +41,7 @@ class AuthServicio {
             throw new Error('Contraseña invalida');
         }
 
-        // Actualizar último login
+        // Actualizar último login-
         await authModel.actualizarUltimoLogin(username.id);
 
         // Generar token JWT
@@ -60,7 +59,7 @@ class AuthServicio {
         return {
             usuario: {
                 id: username.id,
-                username: username.usuario,
+                usuario: username.usuario,
                 email: username.correo,
                 rol: username.rol
             },
@@ -80,7 +79,7 @@ class AuthServicio {
         return usuario;
     }
 
-    // Validaciones de registro
+    // Validaciones de registro-
     validarDatosRegistro(datos) {
         const { usuario, correo, password, rol } = datos;
 
@@ -102,7 +101,7 @@ class AuthServicio {
         }
     }
 
-    // Validar formato de email
+    // Validar formato de email-
     validarEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);

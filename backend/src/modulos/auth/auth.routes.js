@@ -3,10 +3,10 @@ const router = express.Router()
 const authController = require("./auth.controller")
 
 
-router.post("/registar", authController.registrar)
+router.post("/registrar", authController.registrar)
 router.post("/login", authController.login)
 router.get("/", (req, res) => {
-    res.send("Auth")
+    res.send("Login y registrar")
 })
 
 

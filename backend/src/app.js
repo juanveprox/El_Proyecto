@@ -28,9 +28,9 @@ app.get("/", (req, res) => {
     res.send("Hola mundo")
 })
 
-//*Rutas
+//! Rutas
 app.use("/api/auth", require("./modulos/auth/auth.routes"))
-
+app.use("/api/estudiantes", require("./modulos/estudiantes/estudiantes.routes"))
 
 //* Inicio del Servidor
 app.listen(puerto, () => {

@@ -1,13 +1,13 @@
 const authServicio = require('./auth.servicio');
 
 class AuthController {
-    // Registrar nuevo usuario
+    // Registrar nuevo usuario-
     async registrar(req, res) {
         try {
 
             const { nombre, usuario, correo, password } = req.body
 
-            //*Vemos si los campos no esta vacios
+            // //*Vemos si los campos no esta vacios
             if (!nombre || !usuario || !correo || !password) {
                 return res.status(400).json({
                     success: false,
@@ -37,24 +37,19 @@ class AuthController {
         }
     }
 
-    // Login de usuario
+    // Login de usuario-
     async login(req, res) {
         try {
-
-            console.log(req.body)
             const { usuario, password } = req.body;
 
-            // if (!usuario || !password) {
-            //     return res.status(400).json({
-            //         success: false,
-            //         message: 'Usuario y contraseña son requeridos'
-            //     });
-            // }
+            if (!usuario || !password) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Usuario y contraseña son requeridos'
+                });
+            }
 
             const resultado = await authServicio.login({ usuario, password });
-
-
-            console.log("login")
 
             res.status(200).json({
                 success: true,
@@ -69,6 +64,8 @@ class AuthController {
             });
         }
     }
+
+
 
     // Obtener perfil del usuario autenticado
     async obtenerPerfil(req, res) {
