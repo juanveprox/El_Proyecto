@@ -86,7 +86,65 @@ class actividadesController {
             });
         }
     };
+    async editarActividad(req, res) {
+        const { id } = req.params;
+        const { titulo, descripcion, imagenesAEliminar } = req.body;
+        const nuevasImagenes = req.files || [];
 
+        try {
+            // Validar que el ID es un número válido
+            const actividadId = parseInt(id);
+            if (isNaN(actividadId) || actividadId <= 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'ID de actividad inválido'
+                });
+            }
+
+            // Parsear imágenes a eliminar si vienen como string
+            let imagenesAEliminarArray = [];
+            if (imagenesAEliminar) {
+                if (typeof imagenesAEliminar === 'string') {
+                    imagenesAEliminarArray = imagenesAEliminar.split(',').map(id => parseInt(id.trim())).filter(id => !isNaN(id));
+                } else if (Array.isArray(imagenesAEliminar)) {
+                    imagenesAEliminarArray = imagenesAEliminar.map(id => parseInt(id)).filter(id => !isNaN(id));
+                }
+            }
+
+            const actividadActualizada = await actividadesServicio.editarActividad(
+                actividadId,
+                titulo,
+                descripcion,
+                nuevasImagenes,
+                imagenesAEliminarArray
+            );
+
+            res.status(200).json({
+                success: true,
+                message: 'Actividad actualizada correctamente',
+                data: actividadActualizada
+            });
+
+        } catch (error) {
+
+            let statusCode = 500;
+            let message = 'Error al actualizar la actividad';
+
+            if (error.message === 'Actividad no encontrada') {
+                statusCode = 404;
+                message = error.message;
+            } else if (error.message.includes('inválido') || error.message.includes('requeridos') || error.message.includes('exceder')) {
+                statusCode = 400;
+                message = error.message;
+            }
+
+            res.status(statusCode).json({
+                success: false,
+                message: message,
+                error: error.message
+            });
+        }
+    };
 }
 
 module.exports = new actividadesController();
