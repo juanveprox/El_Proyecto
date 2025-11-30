@@ -50,7 +50,7 @@ const upload = multer({
         fileSize: 5 * 1024 * 1024,
         files: 1
     }
-}).single('file');
+}).single('archivo'); // 'archivo' es el nombre del campo en el formulario  
 
 // Middleware final
 const uploadMiddleware = (req, res, next) => {
