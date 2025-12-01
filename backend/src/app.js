@@ -34,7 +34,7 @@ app.use("/api/estudiantes", require("./modulos/estudiantes/estudiantes.routes"))
 app.use("/api/estadistica", require("./modulos/estadistica/estadistica.routes"))
 app.use("/api/actividades", require("./modulos/actividades/actividades.routes"))
 app.use("/api/archivos", require("./modulos/archivos/archivos.routes"))
-// app.use("/api/")
+app.use("/api/personal", require("./modulos/personal/personal.routes"))
 
 
 //* Inicio del Servidor
