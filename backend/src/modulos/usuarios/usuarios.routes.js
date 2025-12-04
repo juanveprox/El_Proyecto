@@ -12,7 +12,7 @@ router.delete("/:id", usuariosController.eliminarUsuario)
 //! Se puede agregar funcionalidad para que admin, restablesca password(se agg a bd columna, para que user actualice al iniciar sesion)
 
 //Rutas para usuarios normales 
-router.get("/perfil/:id", usuariosController.obtenerUsuarioPorId)
+router.get("/perfil/:id", usuariosController.obtenerUsuarioPorId)//?Nota trabaja con ruta de admin
 router.put("/perfil/:id", usuariosController.actualizarUsuarioNormal)
 router.put("/perfil/contrasena/:id", usuariosController.actualizarContrasena)
 module.exports = router;
