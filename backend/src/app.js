@@ -3,7 +3,8 @@ const app = express()
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
-
+const noEncontrado = require("./middleware/noEncontrado")
+const manejarError = require("./middleware/manejarError")
 
 //*Puerto Servidor
 const puerto = process.env.PUERTO || 3000;
@@ -43,3 +44,9 @@ app.listen(puerto, () => {
     console.log(`Servidor ejecutándose en el puerto: ${puerto}`);
     console.log(`Entorno: ${process.env.NODE_ENV || 'Desarrollo'}`);
 })
+
+
+//*Middleware para las rutas no existentes
+
+app.use(noEncontrado);
+app.use(manejarError);
