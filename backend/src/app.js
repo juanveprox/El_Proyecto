@@ -36,6 +36,7 @@ app.use("/api/actividades", require("./modulos/actividades/actividades.routes"))
 app.use("/api/archivos", require("./modulos/archivos/archivos.routes"))
 app.use("/api/personal", require("./modulos/personal/personal.routes"))
 app.use("/api/usuarios", require("./modulos/usuarios/usuarios.routes"))
+app.use("/api/secciones", require("./modulos/secciones/secciones.routes"))
 
 //* Inicio del Servidor
 app.listen(puerto, () => {
