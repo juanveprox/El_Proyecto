@@ -45,7 +45,6 @@ app.listen(puerto, () => {
     console.log(`Entorno: ${process.env.NODE_ENV || 'Desarrollo'}`);
 })
 
-
 //*Middleware para las rutas no existentes
 
 app.use(noEncontrado);

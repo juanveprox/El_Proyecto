@@ -65,8 +65,6 @@ class AuthController {
         }
     }
 
-
-
     // Obtener perfil del usuario autenticado
     async obtenerPerfil(req, res) {
         try {
